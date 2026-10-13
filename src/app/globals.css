@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+/*
+ * C2 design tokens — single source of truth (docs/DESIGN.md §2).
+ * Components read these via Tailwind utilities (bg-brand, text-ink, …) or var(--color-*). Never inline hex.
+ * Layout concept: bright brand-blue hero + calm cool-white pages; the logo's 40° "slash" is the recurring motif.
+ */
+@theme {
+  --color-brand: #0152fb;
+  --color-brand-600: #0042cc;
+  --color-brand-50: #eaf0ff;
+  --color-brand-100: #d5e1ff;
+  --color-navy: #061433;
+  --color-navy-800: #0b1f4d;
+  --color-gold: #e6bc46;
+  --color-gold-100: #fbf1d3;
+  --color-ink: #0b1530;
+  --color-ink-2: #4a5470;
+  --color-muted: #7c8599;
+  --color-paper: #f4f6fb;
+  --color-surface: #ffffff;
+  --color-line: #e0e5ef;
+  --color-positive: #0b7a52;
+  --color-negative: #b83232;
+
+  --font-display: "Archivo Variable", "Arial Black", system-ui, sans-serif;
+  --font-sans: "Figtree Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius-card: 1.5rem;
+  --radius-pill: 999px;
+
+  --ease-c2: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-marquee: marquee 40s linear infinite;
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+:root {
+  color-scheme: light;
+  --space-section: clamp(4.5rem, 9vw, 8rem);
+  --header-h: 72px;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-stretch: 112%;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+/* Word-by-word reveal mask */
+.word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.word-mask > span {
+  display: inline-block;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Range input, styled to the brand */
+.c2-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--color-gold) 0%,
+    var(--color-gold) var(--fill, 50%),
+    rgb(255 255 255 / 0.18) var(--fill, 50%)
+  );
+}
+.c2-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #fff;
+  border: 6px solid var(--color-gold);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.3);
+  cursor: grab;
+}
+.c2-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: 6px solid var(--color-gold);
+  cursor: grab;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-marquee {
+    animation: none;
+  }
+}
